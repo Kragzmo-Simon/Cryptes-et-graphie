@@ -1,15 +1,16 @@
 
 from utils import *
 
-# Exercice 5
+# Exercice 6
 # Les éléments suivants ont été chiffrés à l’aide de la méthode Vigenère, à l’aide d’une clé d’une longueur
-# maximale de 6. Décryptez-le et choisissez ce qui est inhabituel dans le texte en clair. Comment cela at-il affecté les résultats ?
-# HDSFGVMKOOWAFWEETCMFTHSKUCAQBILGJOFMAQLGSPVATVXQBIRYSCPCFRMVSWRVNQ
-# LSZDMGAOQSAKMLUPSQFORVTWVDFCJZVGAOAOQSACJKBRSEVBELVBKSARLSCDCAARMNV
-# RYSYWXQGVELLCYLUWWEOAFGCLAZOWAFOJDLHSSFIKSEPSOYWXAFOWLBFCSOCYLNGQSY
-# ZXGJBMLVGRGGOKGFGMHLMEJABSJVGMLNRVQZCRGGCRGHGEUPCYFGTYDYCJKHQLUHGXGZ
-# OVQSWPDVBWSFFSENBXAPASGAZMYUHGSFHMFTAYJXMWZNRSOFRSOAOPGAUAAARMFTQS
-# MAHVQECEV
+# maximale de 6.
+# XKJUROWMLLPXWZNPIMBVBQJCNOWXPCCHHVVFVSLLFVXHAZITYX
+# OHULXQOJAXELXZXMYJAQFSTSRULHHUCDSKBXKNJQIDALLPQALL
+# UHIAQFPBPCIDSVCIHWHWEWTHBTXRLJNRSNCIHUVFFUXVOUKJLJ
+# SWMAQFVJWJSDYLJOGJXDBOXAJULTUCPZMPLIWMLUBZXVOODYBA
+# FDSKXGQFADSHXNXEHSARUOJAQFPFKNDHSAAFVULLUWTAQFRUPW
+# JRSZXGPFUTJQIYNRXNYNTWMHCUKJFBIRZSMEHHSJSHYONDDZZN
+# TZMPLILRWNMWMLVURYONTHUHABWNVW
 
 CYPHERTEXT = 'XKJUROWMLLPXWZNPIMBVBQJCNOWXPCCHHVVFVSLLFVXHAZITYXOHULXQOJAXELXZXMYJAQFSTSRULHHUCDSKBXKNJQIDALLPQALLUHIAQFPBPCIDSVCIHWHWEWTHBTXRLJNRSNCIHUVFFUXVOUKJLJSWMAQFVJWJSDYLJOGJXDBOXAJULTUCPZMPLIWMLUBZXVOODYBAFDSKXGQFADSHXNXEHSARUOJAQFPFKNDHSAAFVULLUWTAQFRUPWJRSZXGPFUTJQIYNRXNYNTWMHCUKJFBIRZSMEHHSJSHYONDDZZNTZMPLILRWNMWMLVURYONTHUHABWNVW'
 
@@ -21,7 +22,7 @@ for shifting_index in range(1,7):
     coincidences_counts.append(coincidences_count)
     print('For a shift of ', shifting_index, ', we have ', coincidences_count, ' coincidences')
 
-# therefore we can deduce that the vector has a length of 4
+# therefore we can deduce that the vector has a length of 5
 max_coincidences = max(coincidences_counts)
 vector_length = indexes[coincidences_counts.index(max_coincidences)] #length of the key
 print('The vector length is : ', vector_length)
@@ -49,7 +50,6 @@ for word in words:
         print(characters[index], ' : ', frequencies[index])
     # found indices for maximum in frequencies :
     expected_e.append([x for i, x in enumerate(characters) if frequencies[i] == max(frequencies)])
-    #print([i for i, x in enumerate(frequencies) if x == max(frequencies)])
 
 #we build the vectors
 vectors=[[]]
@@ -61,10 +61,11 @@ for x in expected_e:
     vectors = t
 
 # We can expect that:
-#   A is the cyphertext of E for the first key because it is the most frequent letter
-#   W is the cyphertext of E for the second key
-#   S is the cyphertext of E for the first key
-#   F or A is the cyphertext of E for the first key
+#   F is the cyphertext of E for the first key because it is the most frequent letter
+#   H is the cyphertext of E for the second key
+#   J is the cyphertext of E for the third key
+#   L is the cyphertext of E for the fourth key
+#   N is the cyphertext of E for the fifth key
 for vector in vectors :
     for i, x in enumerate(vector) :
         vector[i] = get_character_number('E') - get_character_number(vector[i])
@@ -78,3 +79,5 @@ for vector in vectors :
     for indice, letter in enumerate(CYPHERTEXT):
         message.append( get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )  )
     print(message)
+
+
