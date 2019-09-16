@@ -6,7 +6,7 @@ from utils import *
 # EDSGICKXHUKLZVEQZVKXWKZUKCVUB
 # Les deux premières lettres du texte en clair sont if. Décrypter.
 
-CYPHERTEXT = 'EDSGICKXHUKLZVEQZVKXWKZUKCVUB'
+CIPHERTEXT = 'EDSGICKXHUKLZVEQZVKXWKZUKCVUB'
 
 PLAINTEXT = 'IF'
 
@@ -20,8 +20,8 @@ beta_key = 0
 print('Exercice 3\n')
 
 for alpha in range(0,25):
-    first_beta = get_character_number(CYPHERTEXT[0]) - alpha * get_character_number(PLAINTEXT[0])
-    second_beta = get_character_number(CYPHERTEXT[1]) - alpha * get_character_number(PLAINTEXT[1])
+    first_beta = get_character_number(CIPHERTEXT[0]) - alpha * get_character_number(PLAINTEXT[0])
+    second_beta = get_character_number(CIPHERTEXT[1]) - alpha * get_character_number(PLAINTEXT[1])
     if (first_beta-second_beta)%26 == 0:
         alpha_key = alpha
         beta_key = get_number_modulo26(first_beta)
@@ -38,7 +38,7 @@ print('The modular inverse is : ', modular_inverse)
 # x = mod_inverse * y - mod_inverse * beta [26]
 
 word = ''
-for character in CYPHERTEXT:
+for character in CIPHERTEXT:
     plain_character_number = get_number_modulo26(modular_inverse * (get_character_number(character) - beta_key))
     word += get_number_character(plain_character_number)
 

@@ -7,11 +7,11 @@ from utils import *
 # En effectuant un compte de fréquence, devinez la clé utilisée dans le chiffrement. Utilisez l'ordinateur
 # pour tester votre hypothèse. Quel est le texte en clair déchiffré ?
 
-CYPHERTEXT = 'LCLLEWLJAZLNNZMVYIYLHRMHZA'
+CIPHERTEXT = 'LCLLEWLJAZLNNZMVYIYLHRMHZA'
 
 print('Exercice 2\n')
 
-characters_and_frequencies = get_characters_frequency(CYPHERTEXT)
+characters_and_frequencies = get_characters_frequency(CIPHERTEXT)
 characters = characters_and_frequencies[0]
 frequencies = characters_and_frequencies[1]
 
@@ -23,10 +23,10 @@ for index in range(0, len(characters)):
 
 key = ord('L') - ord('E')
 
-print('The decypher key is : ', key)
+print('The decipher key is : ', key)
 
 word = ''
-for character in CYPHERTEXT:
+for character in CIPHERTEXT:
     word += character_shift(character, -key)
 
-print("The translation of the cypher text is : ", word)
+print("The translation of the cipher text is : ", word)

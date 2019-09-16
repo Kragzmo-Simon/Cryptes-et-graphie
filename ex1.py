@@ -6,14 +6,14 @@ from utils import *
 # YCVEJQWVHQTDTWVWU.
 # Décrypter.
 
-CYPHERTEXT = 'YCVEJQWVHQTDTWVWU'
+CIPHERTEXT = 'YCVEJQWVHQTDTWVWU'
 
 print('Exercice 1\n')
 
 words = []
 for key in range(0,26):
     word = ''
-    for character in CYPHERTEXT:
+    for character in CIPHERTEXT:
         word += character_shift(character, -key)
     words.append(word)
     print(key,' (key) : ',word)

@@ -42,7 +42,7 @@ def get_characters_frequency(word):
     return [characters, frequencies]
 
 def mod_inverse(a, modulo) : 
-    a = a % modulo; 
+    a = a % modulo
     for x in range(1, modulo) : 
         if ((a * x) % modulo == 1) : 
             return x 

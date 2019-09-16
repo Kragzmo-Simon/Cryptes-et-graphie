@@ -7,7 +7,7 @@ from utils import *
 # TCABTIQMFHEQQMRMVMTMAQ
 # Décrypter.
 
-CYPHERTEXT = 'TCABTIQMFHEQQMRMVMTMAQ'
+CIPHERTEXT = 'TCABTIQMFHEQQMRMVMTMAQ'
 alpha_key = 3
 
 print('Exercice4\n')
@@ -18,7 +18,7 @@ print(modular_inverse)
 
 for beta_key in range(0, 25):
     word = ''
-    for character in CYPHERTEXT:
+    for character in CIPHERTEXT:
         plain_character_number = get_number_modulo26(modular_inverse * (get_character_number(character) - beta_key))
         word += get_number_character(plain_character_number)
 
