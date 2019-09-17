@@ -29,6 +29,8 @@ print('The vector length is : ', vector_length)
 
 # We divide the ciphertext into different texts so that each text corresponds to a specific key
 # of the vector used to cipher the full text
+# For instance, if the key is 5, the first vector will contain the 1st letter, the 6th, the 11th, etc.
+# The second vector will contain the 2nd, 7th, 12th, etc. letters.
 words = []
 for i in range(0, vector_length):
     word = ''
@@ -51,14 +53,14 @@ for word in words:
     # found indices for maximum in frequencies :
     expected_e.append([x for i, x in enumerate(characters) if frequencies[i] == max(frequencies)])
 
-#we build the vectors
+# We build the vectors that contains the most frequent characters
 vectors=[[]]
-for x in expected_e:
-    t = []
-    for y in x:
+for most_common_characters_combination in expected_e:
+    solution = []
+    for character in most_common_characters_combination:
         for i in vectors:
-            t.append(i+[y])
-    vectors = t
+            solution.append(i+[character])
+    vectors = solution
 
 # We can expect that:
 #   F is the ciphertext of E for the first key because it is the most frequent letter
@@ -69,15 +71,19 @@ for x in expected_e:
 for vector in vectors :
     for i, x in enumerate(vector) :
         vector[i] = get_character_number('E') - get_character_number(vector[i])
-print("The key is : ")
+print("\nThe key vector is : ")
 print(vectors)
 
-#we decode the message :
-print("Plain text : ")
+# We decode the message :
 for vector in vectors :
+    print("\nA solution for the plain text is : ")
     message=[]
+    PLAINTEXT = ''
     for indice, letter in enumerate(CIPHERTEXT):
         message.append( get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )  )
-    print(message)
+        PLAINTEXT += get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )  
+    #print(message)
+    print(PLAINTEXT)
+
 
 
