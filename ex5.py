@@ -11,7 +11,7 @@ from utils import *
 # OVQSWPDVBWSFFSENBXAPASGAZMYUHGSFHMFTAYJXMWZNRSOFRSOAOPGAUAAARMFTQS
 # MAHVQECEV
 
-CIPHERTEXT = 'XKJUROWMLLPXWZNPIMBVBQJCNOWXPCCHHVVFVSLLFVXHAZITYXOHULXQOJAXELXZXMYJAQFSTSRULHHUCDSKBXKNJQIDALLPQALLUHIAQFPBPCIDSVCIHWHWEWTHBTXRLJNRSNCIHUVFFUXVOUKJLJSWMAQFVJWJSDYLJOGJXDBOXAJULTUCPZMPLIWMLUBZXVOODYBAFDSKXGQFADSHXNXEHSARUOJAQFPFKNDHSAAFVULLUWTAQFRUPWJRSZXGPFUTJQIYNRXNYNTWMHCUKJFBIRZSMEHHSJSHYONDDZZNTZMPLILRWNMWMLVURYONTHUHABWNVW'
+CIPHERTEXT = 'HDSFGVMKOOWAFWEETCMFTHSKUCAQBILGJOFMAQLGSPVATVXQBIRYSCPCFRMVSWRVNQLSZDMGAOQSAKMLUPSQFORVTWVDFCJZVGAOAOQSACJKBRSEVBELVBKSARLSCDCAARMNVRYSYWXQGVELLCYLUWWEOAFGCLAZOWAFOJDLHSSFIKSEPSOYWXAFOWLBFCSOCYLNGQSYZXGJBMLVGRGGOKGFGMHLMEJABSJVGMLNRVQZCRGGCRGHGEUPCYFGTYDYCJKHQLUHGXGZOVQSWPDVBWSFFSENBXAPASGAZMYUHGSFHMFTAYJXMWZNRSOFRSOAOPGAUAAARMFTQSMAHVQECEV'
 
 indexes = []
 coincidences_counts = [] #store the number of coincidence for a shift between the base message and the shifted mesage
@@ -65,16 +65,34 @@ for x in expected_e:
 #   W is the ciphertext of E for the second key
 #   S is the ciphertext of E for the first key
 #   F or A is the ciphertext of E for the first key
+print("\nThe key vector is : ")
+print(vectors)
 for vector in vectors :
     for i, x in enumerate(vector) :
-        vector[i] = get_character_number('E') - get_character_number(vector[i])
-print("la cle est : ")
+        vector[i] = get_character_number('A') - get_character_number(vector[i])
+print("\nThe key vector is : ")
 print(vectors)
 
-#we decode the message :
-print("Message decode : ")
+vectors.append([-get_character_number('N'),-get_character_number('O'),
+                -get_character_number('E'),-get_character_number('S')])
+
+# We decode the message :
 for vector in vectors :
+    print("\nA solution for the plain text is : ")
     message=[]
+    PLAINTEXT = ''
     for indice, letter in enumerate(CIPHERTEXT):
         message.append( get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )  )
-    print(message)
+        PLAINTEXT += get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )
+    #print(message)
+    print(PLAINTEXT)
+
+# There is two key for this text : noes and oesn. It's because there is a missing letter in the middle of the text.
+# The plaintext also contain no e, which means the decoding method use above won't work as it use the frequency of this
+# letter to work.T and A are the next most frequent letter in english, but they're rather close in frequency, which is
+# why using one of those instead of E in the code doesn't work either.
+# We can decode the cypher using a brute force attack with a dictionary based score for each possibility.
+# The possibility containing the most word according to the dictionary should be the plaintext.
+# langage will be the good one.
+# Using this website to found the key :
+# https://www.boxentriq.com/code-breaking/vigenere-cipher
