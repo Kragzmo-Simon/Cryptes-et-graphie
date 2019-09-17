@@ -70,4 +70,4 @@ for vector in vectors:
         plain_vector[i] = get_number_modulo26(round(plain_vector[i]))
         PLAINTEXT += get_number_character(int(plain_vector[i]))
 
-print('Here is the original plaintext : \n', PLAINTEXT)
+print('The plain text is: \n', PLAINTEXT)

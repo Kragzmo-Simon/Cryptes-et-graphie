@@ -19,6 +19,8 @@ beta_key = 0
 
 print('Exercice 3\n')
 
+# We test for each possible value of the alpha key if there is a beta key that matches
+# Once we have both keys, we can decipher easily the cipher text
 for alpha in range(0,25):
     first_beta = get_character_number(CIPHERTEXT[0]) - alpha * get_character_number(PLAINTEXT[0])
     second_beta = get_character_number(CIPHERTEXT[1]) - alpha * get_character_number(PLAINTEXT[1])
@@ -29,11 +31,11 @@ for alpha in range(0,25):
 print('The alpha key is : ', alpha_key)
 print('The beta key is : ', beta_key)
 
-# alpha key = 9 so pgcd(9,26)=1
+# alpha key = 9 so we have gcd(9,26)=1
 
 modular_inverse = mod_inverse(alpha_key, 26)
 
-print('The modular inverse is : ', modular_inverse)
+print('The modular inverse of the alpha key is : ', modular_inverse)
 
 # x = mod_inverse * y - mod_inverse * beta [26]
 
@@ -42,5 +44,5 @@ for character in CIPHERTEXT:
     plain_character_number = get_number_modulo26(modular_inverse * (get_character_number(character) - beta_key))
     word += get_number_character(plain_character_number)
 
-print('The plain text is : ', word)
+print('\nThe plain text is : ', word)
 
