@@ -54,37 +54,20 @@ print(INVERSE_MATRIX)
 
 print('\n')
 
+DECIPHER_MATRIX = modular_inverse * cipher_matrix_determinant * INVERSE_MATRIX
 
-
-
-
-### Debug code and stuff i tried
-
-#dat_matrix = INVERSE_MATRIX * modular_inverse / cipher_matrix_determinant
-
-#print(INVERSE_MATRIX.dot(CIPHER_MATRIX))
-#print(CIPHER_MATRIX.dot(INVERSE_MATRIX))
-
-#print('\n')
-#print(dat_matrix)
-
-dat_inv = (1/55) * np.array([
-    [-8,2,5,0],
-    [-86,-116,440,55],
-    [185,270,95,-110],
-    [-80,145,50,55]])
-
+print('DECIPHER MATRIX : ')
+print(DECIPHER_MATRIX)
 print('\n')
-print(dat_inv)
 
-my_matrix = dat_inv * modular_inverse / cipher_matrix_determinant
+# Decipher each vector to restore the plaintext
 
-print(my_matrix)
+PLAINTEXT = ''
+for vector in vectors:
+    plain_vector = vector.dot(DECIPHER_MATRIX)
 
-res = vectors[0].dot(my_matrix)
+    for i in range(0,len(plain_vector)):
+        plain_vector[i] = get_number_modulo26(round(plain_vector[i]))
+        PLAINTEXT += get_number_character(int(plain_vector[i]))
 
-for i in range(0,len(res)):
-    res[i] = get_number_modulo26(round(res[i]))
-    #print(type(res[i]), ' : ', res[i])
-    print(get_number_character(int(res[i])))
-print(res)
+print('Here is the original plaintext : \n', PLAINTEXT)
