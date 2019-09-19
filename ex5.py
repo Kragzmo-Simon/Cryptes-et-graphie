@@ -70,13 +70,11 @@ for key_number, shifting_key in enumerate(shifting_key_combinations):
 #SOLUTION1 = 'UPONTHISBASISIAMGOINGTOSHOWYOUHOWABUNCHOFBRIGHTYOUNGFOLKSDIDFINDACHAMPIONAMANWITHBOYSANDGIRLSOFHISWWNAMANOFSODOMINATINGANDHAPPYINDIVIDUALITYTHATYOUTHISMBMBOPXWHBIWNBVZTUEONVWOMCEKGJJWNBIHJSOOWPKHVTCOGMJCROYHDTDCOBWCNTYDTZQFIOEFDTYHVEHMHPDCOPDCPTQQXPKBOGKZGPVGPDXQPTJCHBHMAJBZDOIONSEAVOJWXNECIMYUCUSONUYBBNKFFZIVVEEKNEEKIBBCIHMWIEYBBDEIIUHMMPQR'
 #SOLUTION2 = 'TZASSRUXAKENRSMRFYUSFDAXGYIDNETTVKNZMMTTELDNFRFDNEZLEYXPRNUIESZIZMTFLZUTMKYFMGUYGLADRKZIFSDQRYRMHCIBMKYFMYRXNNARHXMYHXSFMNTFOZKNMNUAHNGFKSFDSRMYXYGYGSERAWNTOHIMASISAFLYTOASUGARBOWLITISASTORYABOUTASMALLTOWNITISNOTAGOSSIPYYARNNORISITADRYMONOTONOUSACCOUNTFULLOFSUCHCUSTOMARYFILLINSASROMANTICMOONLIGHTCASTINGMURKYSHADOWSDOWNALONGWINDINGCOUNTRYROAD'
 
-# There is two key for this text : (12,22,8,13) and (13,12,22,8). It's because there is a missing letter in the middle of the text.
-# The plaintext also contain no 'e', which means the decoding method based on frequency won't work as it use the frequency of the 'e'
-# letter to work.T and A are the next most frequent letter in english, but they're rather close in frequency, which is
-# why using only one of those instead of E in the code doesn't work either.
-# We can decode the message using common words that are used in english to detect which solution is the actual plaintext.
-# We used this website as well to help us figure out why frequency didn't work :
-# https://www.boxentriq.com/code-breaking/vigenere-cipher
+print("\nThere is two key for this text : (12,22,8,13) and (13,12,22,8). It's because there is a missing letter in the middle of the text."
++ "\nThe plaintext also contain no 'e', which means the decoding method based on frequency won't work as it use the frequency of the 'e'"
++ "\nletter to work.T and A are the next most frequent letter in english, but they're rather close in frequency, which is"
++ "\nwhy using only one of those instead of E in the code doesn't work either."
++ "\nWe can decode the message using common words that are used in english to detect which solution is the actual plaintext.")
 
 # If we place a letter in the middle of the text, we can restore the original plaintext
 
