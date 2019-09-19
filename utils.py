@@ -1,4 +1,6 @@
 
+import math
+
 alphabet_lower_bound = ord('A')
 alphabet_upper_bound = ord('Z')
 
@@ -75,3 +77,6 @@ def build_MFC_combination(most_frequent_characters):
         vectors = solution
     return vectors
 
+def get_progress_step(number, percentage):
+    progress_step = math.floor(0.01 * percentage * number)
+    return progress_step
