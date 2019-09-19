@@ -40,22 +40,26 @@ for index in range(0, len(CIPHERTEXT)):
         if index%vector_length == word_index:
             words[word_index] += CIPHERTEXT[index]
 
-expected_e = []
+most_frequent_characters = []
 
 for word in words:
     print('For the word : ', word, ' we have these frequencies : ')
+    frequency_display = ''
     characters_and_frequencies = get_characters_frequency(word)
     characters = characters_and_frequencies[0]
     frequencies = characters_and_frequencies[1]
 
     for index in range(0, len(characters)):
-        print(characters[index], ' : ', frequencies[index])
+        frequency_display += characters[index] + ' : ' + str(frequencies[index]) + '  ;  '
     # found indices for maximum in frequencies :
-    expected_e.append([x for i, x in enumerate(characters) if frequencies[i] == max(frequencies)])
+    most_frequent_characters.append([x for i, x in enumerate(characters) if frequencies[i] == max(frequencies)])
+    print(frequency_display)
+
+display_most_frequent_characters(most_frequent_characters)
 
 # We build the vectors that contains the most frequent characters
 vectors=[[]]
-for most_common_characters_combination in expected_e:
+for most_common_characters_combination in most_frequent_characters:
     solution = []
     for character in most_common_characters_combination:
         for i in vectors:

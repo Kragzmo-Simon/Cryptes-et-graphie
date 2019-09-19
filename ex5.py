@@ -13,8 +13,12 @@ from utils import *
 
 CIPHERTEXT = 'HDSFGVMKOOWAFWEETCMFTHSKUCAQBILGJOFMAQLGSPVATVXQBIRYSCPCFRMVSWRVNQLSZDMGAOQSAKMLUPSQFORVTWVDFCJZVGAOAOQSACJKBRSEVBELVBKSARLSCDCAARMNVRYSYWXQGVELLCYLUWWEOAFGCLAZOWAFOJDLHSSFIKSEPSOYWXAFOWLBFCSOCYLNGQSYZXGJBMLVGRGGOKGFGMHLMEJABSJVGMLNRVQZCRGGCRGHGEUPCYFGTYDYCJKHQLUHGXGZOVQSWPDVBWSFFSENBXAPASGAZMYUHGSFHMFTAYJXMWZNRSOFRSOAOPGAUAAARMFTQSMAHVQECEV'
 
+"""
+Step 1 : calculate the key length
+"""
+
 indexes = []
-coincidences_counts = [] #store the number of coincidence for a shift between the base message and the shifted mesage
+coincidences_counts = [] #store the number of coincidence for a shift between the base message and the shifted message
 for shifting_index in range(1,7):
     coincidences_count = compare_text_shifting_coincidences(CIPHERTEXT, shifting_index)
     indexes.append(shifting_index)
@@ -24,68 +28,39 @@ for shifting_index in range(1,7):
 # therefore we can deduce that the vector has a length of 4
 max_coincidences = max(coincidences_counts)
 vector_length = indexes[coincidences_counts.index(max_coincidences)] #length of the key
-print('The vector length is : ', vector_length)
+print('\nTherefore, the vector length is : ', vector_length)
 
-# We divide the ciphertext into different texts so that each text corresponds to a specific key
-# of the vector used to cipher the full text
-words = []
-for i in range(0, vector_length):
-    word = ''
-    words.append(word)
-for index in range(0, len(CIPHERTEXT)):
-    for word_index in range(0, vector_length):
-        if index%vector_length == word_index:
-            words[word_index] += CIPHERTEXT[index]
+# We tried an attack based on the frequency of the letters but it did not work.
+# Thus, we use a brute force attack.
 
-expected_e = []
+"""
+Step 2 : build all shift combinations
+"""
 
-for word in words:
-    print('For the word : ', word, ' we have these frequencies : ')
-    characters_and_frequencies = get_characters_frequency(word)
-    characters = characters_and_frequencies[0]
-    frequencies = characters_and_frequencies[1]
+shifting_key_combinations = [[]]
+for step in range(0,vector_length):
+    solution = []
+    for index in range(1,26):   # we expect a shift to be non-zero
+        for preceding_shift in shifting_key_combinations:
+            solution.append(preceding_shift+[index])
+    shifting_key_combinations = solution
 
-    for index in range(0, len(characters)):
-        print(characters[index], ' : ', frequencies[index])
-    # found indices for maximum in frequencies :
-    expected_e.append([x for i, x in enumerate(characters) if frequencies[i] == max(frequencies)])
-    #print([i for i, x in enumerate(frequencies) if x == max(frequencies)])
+"""
+Step 3 : Decipher
+"""
 
-#we build the vectors
-vectors=[[]]
-for x in expected_e:
-    t = []
-    for y in x:
-        for i in vectors:
-            t.append(i+[y])
-    vectors = t
-
-# We can expect that:
-#   A is the ciphertext of E for the first key because it is the most frequent letter
-#   W is the ciphertext of E for the second key
-#   S is the ciphertext of E for the first key
-#   F or A is the ciphertext of E for the first key
-print("\nThe key vector is : ")
-print(vectors)
-for vector in vectors :
-    for i, x in enumerate(vector) :
-        vector[i] = get_character_number('A') - get_character_number(vector[i])
-print("\nThe key vector is : ")
-print(vectors)
-
-vectors.append([-get_character_number('N'),-get_character_number('O'),
-                -get_character_number('E'),-get_character_number('S')])
-
-# We decode the message :
-for vector in vectors :
-    print("\nA solution for the plain text is : ")
-    message=[]
+for shifting_key in shifting_key_combinations:
     PLAINTEXT = ''
-    for indice, letter in enumerate(CIPHERTEXT):
-        message.append( get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )  )
-        PLAINTEXT += get_number_character(  (get_character_number(letter) + vector[indice%(len(vector))])%26 )
-    #print(message)
-    print(PLAINTEXT)
+    for index, letter in enumerate(CIPHERTEXT):
+        PLAINTEXT += get_number_character(  (get_character_number(letter) + shifting_key[index%vector_length])%26 )
+
+    if 'THIS' in PLAINTEXT:
+        print('\nOne solution may be : ', shifting_key)
+        print(PLAINTEXT)
+
+#SOLUTION1 = 'UPONTHISBASISIAMGOINGTOSHOWYOUHOWABUNCHOFBRIGHTYOUNGFOLKSDIDFINDACHAMPIONAMANWITHBOYSANDGIRLSOFHISWWNAMANOFSODOMINATINGANDHAPPYINDIVIDUALITYTHATYOUTHISMBMBOPXWHBIWNBVZTUEONVWOMCEKGJJWNBIHJSOOWPKHVTCOGMJCROYHDTDCOBWCNTYDTZQFIOEFDTYHVEHMHPDCOPDCPTQQXPKBOGKZGPVGPDXQPTJCHBHMAJBZDOIONSEAVOJWXNECIMYUCUSONUYBBNKFFZIVVEEKNEEKIBBCIHMWIEYBBDEIIUHMMPQR'
+#SOLUTION2 = 'TZASSRUXAKENRSMRFYUSFDAXGYIDNETTVKNZMMTTELDNFRFDNEZLEYXPRNUIESZIZMTFLZUTMKYFMGUYGLADRKZIFSDQRYRMHCIBMKYFMYRXNNARHXMYHXSFMNTFOZKNMNUAHNGFKSFDSRMYXYGYGSERAWNTOHIMASISAFLYTOASUGARBOWLITISASTORYABOUTASMALLTOWNITISNOTAGOSSIPYYARNNORISITADRYMONOTONOUSACCOUNTFULLOFSUCHCUSTOMARYFILLINSASROMANTICMOONLIGHTCASTINGMURKYSHADOWSDOWNALONGWINDINGCOUNTRYROAD'
+
 
 # There is two key for this text : noes and oesn. It's because there is a missing letter in the middle of the text.
 # The plaintext also contain no e, which means the decoding method use above won't work as it use the frequency of this

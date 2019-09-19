@@ -56,5 +56,22 @@ def compare_text_shifting_coincidences(cyphertext, shifting_index):
             coincidences_count += 1
     return coincidences_count
 
+def display_most_frequent_characters(most_frequent_characters):
+    print()
+    for index, key_most_frequent_characters in enumerate(most_frequent_characters):
+        key_most_frequent_characters_display = ''
+        for character in key_most_frequent_characters:
+            key_most_frequent_characters_display += character
+        print('For the key ', index+1, ', the most frequent characters are : ', key_most_frequent_characters_display)
 
+def build_MFC_combination(most_frequent_characters):
+    # MFC = most frequent character
+    vectors=[[]]
+    for most_common_characters_combination in most_frequent_characters:
+        solution = []
+        for character in most_common_characters_combination:
+            for preceding_character in vectors:
+                solution.append(preceding_character+[character])
+        vectors = solution
+    return vectors
 
